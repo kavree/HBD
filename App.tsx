@@ -73,7 +73,13 @@ const App: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: appVisible ? 1 : 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen font-['Prompt','Kanit'] text-gray-200 relative z-0"
+      style={{ 
+        minHeight: '100vh',
+        fontFamily: "'Prompt', 'Kanit'",
+        color: '#e5e7eb',
+        position: 'relative',
+        zIndex: 0
+      }}
     >
       <Header areCandlesLit={areCandlesLit} setAreCandlesLit={setAreCandlesLit} />
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative z-[5]">

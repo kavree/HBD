@@ -1,14 +1,44 @@
-# Run and deploy your AI Studio app
+# Birthday Wishes
 
-This contains everything you need to run your app locally.
+A beautiful birthday wishes website built with React, TypeScript, and Vite.
 
-## Run Locally
+## Features
 
-**Prerequisites:**  Node.js
+- Animated birthday envelope
+- Image gallery
+- Spotify player integration
+- Responsive design
+- Beautiful animations
 
+## Tech Stack
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- React
+- TypeScript
+- Vite
+- Framer Motion
+- Supabase
+- Tailwind CSS
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run development server:
+   ```bash
+   npm run dev
+   ```
+4. Build for production:
+   ```bash
+   npm run build
+   ```
+
+## Environment Variables
+
+Create a `.env` file with the following variables:
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```

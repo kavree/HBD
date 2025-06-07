@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สุขสันต์วันเกิดที่รัก</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Sarabun:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffe5d9, #ffd1dc, #f3e5f5);
+            font-family: 'Sriracha', 'Sarabun', sans-serif;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 2;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #f8c3f8, #e6b8e6);
+            border-radius: 8px;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.2),
+                inset 0 0 15px rgba(255, 255, 255, 0.5);
+            transform-style: preserve-3d;
+            transition: all 0.8s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ส่วนด้านข้างซองจดหมาย */
+        .envelope:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #e6b8e6, #d8a7d8);
+            border-radius: 8px;
+            transform: translateZ(-10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* ส่วนมุมซองจดหมาย */
+        .envelope:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+            border-radius: 8px;
+            clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: -110px;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background: linear-gradient(160deg, #f8c3f8, #e6b8e6);
+            clip-path: polygon(0 100%, 5% 95%, 10% 90%, 15% 85%, 20% 80%, 25% 75%, 30% 70%, 35% 65%, 40% 60%, 45% 55%, 50% 50%, 55% 55%, 60% 60%, 65% 65%, 70% 70%, 75% 75%, 80% 80%, 85% 85%, 90% 90%, 95% 95%, 100% 100%);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 
+                0 -5px 15px rgba(0, 0, 0, 0.1),
+                inset 0 0 10px rgba(255, 255, 255, 0.5);
+            z-index: 3;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* ส่วนมุมของ flap */
+        .envelope-flap:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(160deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+            clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+        }
+
+        /* เพิ่มลายประดับซองจดหมาย */
+        .envelope-decoration {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .card {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            background: linear-gradient(to bottom, #ffffff, #f9f0ff);
+            top: 5%;
+            left: 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(20px) rotateY(180deg);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            border-radius: 5px;
+            box-shadow: 
+                inset 0 0 10px rgba(0, 0, 0, 0.05),
+                0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card p {
+            font-size: 24px;
+            color: #7e57c2;
+            margin: 10px 0;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #e91e63;
+            opacity: 0;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f44336;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .opened .envelope-container {
+            transform: translateY(-50px) rotateX(10deg);
+        }
+
+        .opened .envelope-flap {
+            transform: rotateX(180deg) translateY(-10px);
+        }
+
+        .opened .card {
+            opacity: 1;
+            transform: translateY(0) rotateY(0deg);
+            transition-delay: 0.4s;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .message {
+            position: absolute;
+            bottom: 20px;
+            color: #7e57c2;
+            font-size: 16px;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        /* เพิ่มสแตมป์บนซองจดหมาย */
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ffeb3b, #ff9800);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 0 2px rgba(0,0,0,0.3);
+            transform: rotate(15deg);
+            border: 2px dotted rgba(255,255,255,0.5);
+        }
+
+        /* เพิ่มลายเส้นบนซองจดหมาย */
+        .envelope-line {
+            position: absolute;
+            width: 80%;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            top: 50%;
+            left: 10%;
+            z-index: 1;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="hearts" id="hearts"></div>
+        <div class="envelope-container">
+            <div class="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-decoration"></div>
+                <div class="envelope-line"></div>
+                <div class="stamp">LOVE</div>
+                <div class="card">
+                    <p>สุขสันต์วันเกิดนะเบบี๋ 💜</p>
+                    <p>Happy Birthday my love 💜</p>
+                </div>
+            </div>
+        </div>
+        <div class="message">คลิกที่ซองจดหมายเพื่อเปิด</div>
+    </div>
+
+    <script>
+        // สร้างหัวใจลอย
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // สร้าง confetti
+        function createConfetti() {
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                
+                // ลบ confetti หลังจาก animation เสร็จ
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createHearts();
+            
+            document.querySelector('.envelope-container').addEventListener('click', function() {
+                this.classList.add('opened');
+                createConfetti();
+                
+                // ซ่อนข้อความคำแนะนำ
+                document.querySelector('.message').style.opacity = 0;
+                
+                // รอให้ animation เปิดซองจดหมายเสร็จก่อน
+                setTimeout(() => {
+                    // เพิ่ม animation fade out
+                    document.body.classList.add('fade-out');
+                    
+                    // รอให้ animation fade out เสร็จแล้วค่อยเปลี่ยนหน้า
+                    setTimeout(() => {
+                        window.location.href = 'BirthdayIntro.html';
+                    }, 1000);
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
